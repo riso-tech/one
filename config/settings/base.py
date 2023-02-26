@@ -67,7 +67,6 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
-    "one.libraries.allauth.config",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -181,7 +180,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "one.libraries.allauth.config.context_processors.allauth_settings",
+                "one.libraries.allauth.allauth_settings",
             ],
             "loaders": [
                 "django.template.loaders.filesystem.Loader",
@@ -302,13 +301,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "one.libraries.allauth.config.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "one.libraries.allauth.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {"signup": "one.libraries.allauth.config.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "one.libraries.allauth.UserSignupForm"}
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "one.libraries.allauth.config.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "one.libraries.allauth.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-SOCIALACCOUNT_FORMS = {"signup": "one.libraries.allauth.config.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "one.libraries.allauth.UserSocialSignupForm"}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
