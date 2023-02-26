@@ -357,6 +357,7 @@ CONSTANCE_CONFIG = {
     "UI_THEME_SELECT": ("default", "UI Theme Select", "ui_theme_select"),
     "ADMIN_THEME_SELECT": ("adminlte", "Admin Theme Select", "admin_theme_select"),
 }
+CONSTANCE_REDIS_CONNECTION = env("REDIS_URL")
 
 # Your stuff...
 # ------------------------------------------------------------------------------
