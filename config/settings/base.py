@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "constance",
 ]
 
 LOCAL_APPS = [
@@ -183,6 +184,7 @@ TEMPLATES = [
                 "one.libraries.allauth.allauth_settings",
             ],
             "loaders": [
+                "one.libraries.django.ThemeDirectoriesLoader",
                 "django.template.loaders.filesystem.Loader",
                 "django.template.loaders.app_directories.Loader",
             ],
@@ -331,5 +333,30 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }
+
+# Django Constance
+# ------------------------------------------------------------------------------
+CONSTANCE_ADDITIONAL_FIELDS = {
+    "ui_theme_select": [
+        "django.forms.fields.ChoiceField",
+        {"widget": "django.forms.Select", "choices": (("default", "Default"),)},
+    ],
+    "admin_theme_select": [
+        "django.forms.fields.ChoiceField",
+        {
+            "widget": "django.forms.Select",
+            "choices": (
+                ("adminlte", "AdminLTE"),
+                ("metronic", "Metronic"),
+            ),
+        },
+    ],
+}
+
+CONSTANCE_CONFIG = {
+    "UI_THEME_SELECT": ("default", "UI Theme Select", "ui_theme_select"),
+    "ADMIN_THEME_SELECT": ("adminlte", "Admin Theme Select", "admin_theme_select"),
+}
+
 # Your stuff...
 # ------------------------------------------------------------------------------
