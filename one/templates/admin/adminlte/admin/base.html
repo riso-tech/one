@@ -1,4 +1,4 @@
-{% load static %}
+{% load i18n static %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
@@ -14,8 +14,16 @@
     <title>{% block title %}{% endblock %}</title>
   {% endblock head-meta %}
 
-  {% block head-css %}
+  {% block head-js %}
+    <!-- jQuery -->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Page JS -->
+    {% block head-js-extend %}{% endblock head-js-extend %}
+    <!-- Page JS Inline -->
+    {% block head-js-page-custom %}{% endblock head-js-page-custom %}
+  {% endblock head-js %}
 
+  {% block head-css %}
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -41,15 +49,6 @@
     {% block responsive %}<!-- Django CSS for responsive  -->{% endblock responsive %}
     {% block head-css-page-custom %}<!-- Page Css Inline  -->{% endblock head-css-page-custom %}
   {% endblock head-css %}
-
-  {% block head-js %}
-    <!-- jQuery -->
-    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
-
-    {% block head-js-extend %}
-    {% endblock head-js-extend %}
-    {% block head-js-page-custom %}{% endblock head-js-page-custom %}
-  {% endblock head-js %}
 </head>
 
 
@@ -58,19 +57,35 @@
 <div class="wrapper">
 
   {% block body %}
+    {% if not is_popup %}
+      {% include 'admin/partials/navbar.html' %}
 
-    {% include 'admin/partials/navbar.html' %}
-
-    {% include 'admin/partials/sidebar.html' %}
-
+      {% if not is_popup and is_nav_sidebar_enabled %}
+        {% include 'admin/partials/sidebar.html' %}
+      {% endif %}
+    {% endif %}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       {% include "admin/partials/page_header.html" %}
       <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          {% block content %}
-          {% endblock content %}
+          {% block body-content %}
+            <!-- Content -->
+            <div id="content" class="{% block coltype %}colM{% endblock %}">
+              {% block pretitle %}{% endblock %}
+              {% block content_title %}{% if title %}<h1></h1>{% endif %}{% endblock %}
+              {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+              {% block content %}
+                {% block object-tools %}{% endblock %}
+                {{ content }}
+              {% endblock %}
+              {% block sidebar %}{% endblock %}
+              <br class="clear">
+            </div>
+            <!-- END Content -->
+
+          {% endblock body-content %}
         </div>
         <!-- /.container-fluid -->
       </div>
@@ -103,6 +118,16 @@
       <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
       <!-- AdminLTE -->
       <script src="{% static 'adminlte/js/adminlte.js' %}"></script>
+
+      {% block body-js-inline %}
+        {#        {% block messages %}#}
+        {#      {% if messages %}#}
+        {#        <ul class="messagelist">{% for message in messages %}#}
+        {#          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>#}
+        {#        {% endfor %}</ul>#}
+        {#      {% endif %}#}
+        {#    {% endblock messages %}#}
+      {% endblock body-js-inline %}
 
       {% block page-js-libs %}
 
