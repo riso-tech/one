@@ -5,13 +5,13 @@
     <scripts>
       <script value="dev" />
     </scripts>
-    <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.19.0/bin/node" />
+    <node-interpreter value="node" />
     <envs />
     <method v="2">
       <option name="NpmBeforeRunTask" enabled="true">
         <package-json value="$PROJECT_DIR$/package.json" />
         <command value="install" />
-        <node-interpreter value="$USER_HOME$/.nvm/versions/node/v16.19.0/bin/node" />
+        <node-interpreter value="node" />
         <envs />
       </option>
     </method>
