@@ -353,14 +353,17 @@ CONSTANCE_ADDITIONAL_FIELDS = {
             ),
         },
     ],
+    "image_field": ["django.forms.ImageField", {}],
 }
 
 CONSTANCE_CONFIG = {
     "UI_THEME_SELECT": ("default", "UI Theme Select", "ui_theme_select"),
     "ADMIN_THEME_SELECT": ("adminlte", "Admin Theme Select", "admin_theme_select"),
+    "ADMIN_LOGO": ("adminlte/", "Admin Logo", "image_field"),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
+    "Images": ("ADMIN_LOGO",),
     "Theme Options": (
         "UI_THEME_SELECT",
         "ADMIN_THEME_SELECT",
