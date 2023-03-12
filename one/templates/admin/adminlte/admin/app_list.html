@@ -1,39 +1,53 @@
 {% load i18n %}
 
 {% if app_list %}
+
   {% for app in app_list %}
-    <div class="app-{{ app.app_label }} module{% if app.app_url in request.path|urlencode %} current-app{% endif %}">
-      <table>
-        <caption>
-          <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
-        </caption>
+    <ul class="app-{{ app.app_label }} module{% if app.app_url in request.path|urlencode %} current-app{% endif %} nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <li class="d-block nav-item menu-open ">
+      <a href="{{ app.app_url }}" class="nav-link section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              {{ app.name }}
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+
         {% for model in app.models %}
-          <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
+          <div class="d-flex flex-nowrap model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %} nav nav-treeview">
             {% if model.admin_url %}
-              <th scope="row"><a href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}>{{ model.name }}</a></th>
+              <div class="flex-fill">
+                <a class="nav-link" href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{ model.name }}</p>
+                </a>
+              </div>
             {% else %}
-              <th scope="row">{{ model.name }}</th>
+              <div class="flex-fill">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{ model.name }}</p>
+              </div>
             {% endif %}
 
             {% if model.add_url %}
-              <td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>
+              <div class="flex-fill"><a href="{{ model.add_url }}" class="addlink"><i class="far fa-plus-square"></i> {% translate 'Add' %}</a></div>
             {% else %}
-              <td></td>
+              <div></div>
             {% endif %}
 
             {% if model.admin_url and show_changelinks %}
               {% if model.view_only %}
-                <td><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></td>
+                <div><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></div>
               {% else %}
-                <td><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></td>
+                <div><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></div>
               {% endif %}
             {% elif show_changelinks %}
-              <td></td>
+              <div></div>
             {% endif %}
-          </tr>
+          </div>
         {% endfor %}
-      </table>
-    </div>
+      </li>
+    </ul>
   {% endfor %}
 {% else %}
   <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
